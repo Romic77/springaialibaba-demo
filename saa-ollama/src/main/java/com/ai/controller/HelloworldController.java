@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
+
 /**
  * @author yuluo
  * @author <a href="mailto:yuluo08290126@gmail.com">yuluo</a>
@@ -38,17 +40,18 @@ public class HelloworldController {
     /**
      * ChatClient 流式调用
      */
-    @GetMapping(value = "/stream/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/stream/chat")
     public Flux<String> streamChat(@RequestParam(value = "query", defaultValue = "你好，很高兴认识你") String query) {
 
         Prompt prompt = new Prompt(query);
 
         return ollamaChatModel
                 .stream(prompt)
-                .map(resp -> resp.getResult().getOutput())
-                .map(token -> "data:" + token + "\n\n");
-
+                .mapNotNull(resp -> resp.getResult().getOutput().getText())
+                .filter(content -> content != null && !content.isEmpty())
+                .bufferTimeout(10, Duration.ofMillis(100)) // 👈 聚合
+                .map(list -> String.join("", list))
+                .map(content -> content);
     }
-
 
 }

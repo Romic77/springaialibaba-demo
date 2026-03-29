@@ -55,7 +55,7 @@ public class HelloworldController {
     }
 
     /**
-     * ChatClient 流式调用
+     * ChatClient 流式调用 http://localhost:8001/ollama/stream/chat?query=你是谁
      */
     @GetMapping("/stream/chat")
     public Flux<String> streamChat(@RequestParam(value = "query", defaultValue = "你好，很高兴认识你，能简单介绍一下自己吗？") String query, HttpServletResponse response) {
