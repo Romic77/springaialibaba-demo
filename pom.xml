@@ -14,6 +14,7 @@
         <module>saa-ollama</module>
         <module>saa-chatclientchatmodel</module>
         <module>chat-prompt</module>
+        <module>saa-prompt-template</module>
     </modules>
 
     <properties>
