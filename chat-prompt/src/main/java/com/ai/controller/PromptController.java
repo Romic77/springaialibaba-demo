@@ -1,11 +1,8 @@
 package com.ai.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +42,12 @@ public class PromptController {
     @GetMapping("/prompt/chat3")
     public String chat3(@RequestParam("query") String query) {
         return Objects.requireNonNull(chatClient.prompt().user(query).call().chatResponse()).getResult().getOutput().getText();
+    }
+
+    @GetMapping("/prompt/chat4")
+    public String chat4(@RequestParam("query") String query) {
+
+
+        return Objects.requireNonNull(chatClient.prompt().system("如果用户问天气，必须调用weather工具").user(query + "未来3天天气如何").call().chatResponse()).getResult().getOutput().getText();
     }
 }
