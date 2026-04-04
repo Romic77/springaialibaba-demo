@@ -13,6 +13,7 @@
         <module>hello-world</module>
         <module>saa-ollama</module>
         <module>saa-chatclientchatmodel</module>
+        <module>chat-prompt</module>
     </modules>
 
     <properties>

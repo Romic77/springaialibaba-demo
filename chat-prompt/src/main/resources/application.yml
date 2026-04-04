@@ -1,0 +1,33 @@
+server:
+  port: ${SERVER_PORT:8001}
+  shutdown: graceful #优雅停机
+  tomcat:
+    threads:
+      max: 200           # 最大工作线程数
+      min-spare: 20      # 最小空闲线程
+    max-connections: 8192 # 最大连接数
+    accept-count: 100    # 等待队列容量
+    connection-timeout: 120s # 连接超时时间
+    keep-alive-timeout: 120s # 长连接保持时间
+    max-keep-alive-requests: 100 # 单个连接最大请求数
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+
+
+spring:
+  jackson:
+    time-zone: UTC
+  application:
+    name: springaialibaba-demo
+  lifecycle:
+    timeout-per-shutdown-phase: 30s     # 设置最大等待时间（默认30秒）
+  profiles:
+    default: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
