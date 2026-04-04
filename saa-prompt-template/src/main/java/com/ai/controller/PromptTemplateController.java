@@ -4,6 +4,8 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +18,11 @@ public class PromptTemplateController {
     @Autowired
     private ChatClient chatclient;
 
+    @Value("classpath:/prompttemplate/template.txt")
+    private Resource userTemplate;
+
     /**
      * http://192.168.5.240:8001/prompt/template/chat?name=%E5%BC%A0%E4%B8%89&output_format=html&count=100
-     *
      */
     @GetMapping("/prompt/template/chat")
     public Flux<String> chat(@RequestParam("name") String name, @RequestParam("output_format") String output_format, @RequestParam("count") int count) {
@@ -32,5 +36,20 @@ public class PromptTemplateController {
         ));
 
         return chatclient.prompt(prompt).stream().content();
+    }
+
+    @GetMapping("/prompt/template/chat2")
+    public Flux<String> chat2(@RequestParam("name") String name, @RequestParam("output_format") String output_format, @RequestParam("count") int count) {
+        PromptTemplate promptTemplate = new PromptTemplate(
+               userTemplate
+        );
+        Prompt prompt = promptTemplate.create(Map.of(
+                "name", name,
+                "output_format", output_format,
+                "count", count
+        ));
+
+        return chatclient.prompt(prompt).stream().content();
+
     }
 }
