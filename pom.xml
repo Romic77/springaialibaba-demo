@@ -15,6 +15,7 @@
         <module>saa-chatclientchatmodel</module>
         <module>chat-prompt</module>
         <module>saa-prompt-template</module>
+        <module>saa-structredoutput</module>
     </modules>
 
     <properties>
