@@ -1,8 +1,10 @@
 package com.ai.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
+import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -50,6 +53,30 @@ public class PromptTemplateController {
         ));
 
         return chatclient.prompt(prompt).stream().content();
+    }
 
+    /**
+     * 多角色设定
+     * @param systemTopic
+     * @param userTopic
+     * @return
+     */
+    @GetMapping("/prompt/template/chat3")
+    public Flux<String> chat3(@RequestParam("systemTopic") String systemTopic, @RequestParam("userTopic") String userTopic) {
+        SystemPromptTemplate systemPromptTemplate = new SystemPromptTemplate(
+                "你是一个 {systemTopic} 的助手,只回答{systemTopic}相关问题"
+        );
+        Message systemMessage = systemPromptTemplate.createMessage(Map.of("systemTopic", systemTopic));
+
+        PromptTemplate promptTemplate = new PromptTemplate(
+                "解释一下{userTopic}"
+        );
+
+        Message userMessage = promptTemplate.createMessage(Map.of(
+                "userTopic", userTopic
+        ));
+
+        Prompt prompt1 = new Prompt(List.of(systemMessage, userMessage));
+        return chatclient.prompt(prompt1).stream().content();
     }
 }
