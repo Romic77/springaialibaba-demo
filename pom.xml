@@ -16,6 +16,10 @@
         <module>chat-prompt</module>
         <module>saa-prompt-template</module>
         <module>saa-structredoutput</module>
+        <module>saa-chatmemory</module>
+        <module>saa-text2image</module>
+        <module>saa-text2voice</module>
+        <module>saa-vector</module>
     </modules>
 
     <properties>
