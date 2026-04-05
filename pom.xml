@@ -20,6 +20,7 @@
         <module>saa-text2image</module>
         <module>saa-text2voice</module>
         <module>saa-vector</module>
+        <module>saa-rag</module>
     </modules>
 
     <properties>
