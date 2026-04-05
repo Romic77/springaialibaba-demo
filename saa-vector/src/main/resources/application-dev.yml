@@ -6,3 +6,18 @@ spring:
       chat:
         options:
           model: qwen-plus
+      embedding:
+        options:
+          model: text-embedding-v3
+    vectorstore:
+      redis:
+        initialize-schema: true
+        index-name: custom-index
+        prefix: custom-index
+
+  data:
+    redis:
+      host: 47.98.113.40
+      port: 6379
+      username: default
+      password:
