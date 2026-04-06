@@ -21,7 +21,8 @@
         <module>saa-text2voice</module>
         <module>saa-vector</module>
         <module>saa-rag</module>
-        <module>saa-toolcalling</module>
+        <module>saa-mcp-server</module>
+        <module>saa-mcp-client</module>
     </modules>
 
     <properties>

@@ -1,0 +1,14 @@
+
+spring:
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: qwen3.5:4b
+    mcp:
+      server:
+        type: async
+        name: custom-mcp-server
+        version: 1.0.0
+
